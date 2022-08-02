@@ -18,7 +18,7 @@ class load_data:
         self.I, self.Is, self.V, self.Vs = {},{},{},{}
 
 # Plotting the IV curve at the breakdown voltage, and the forward threshold
-def plots():
+def ivplots():
     figure, axis = plt.subplots(2,1,dpi=200,figsize=(12,12))
     for ch in channels: # Cycle through all sipm channels
         # Plot the breakdown voltage
@@ -32,6 +32,8 @@ def plots():
                 item.set_fontsize(20)
         axis[1].set_yscale('log')
     figure.tight_layout()
+    
+def thplots():
     figure, axis = plt.subplots(2,1,dpi=200,figsize=(12,12))
     for ch in channels: # Cycle through all sipm channels
         # Plot the forward threshold bias
@@ -77,8 +79,8 @@ if __name__ == "__main__":
     SCRIPTS,HOME,DATA,ARCHIVE,TEMP,DEV,PROC,PLOTS,REPORTS = init.envr() # Setup the local environment
     
     channels = [1,3,6,7,8,9,10,11,12,14,15,16] # These are the channels that were measured
-    channels.remove(1)
-    channels.remove(3)
+    #channels.remove(1)
+    #channels.remove(3)
     IVs = [] # Create a list to hold the types of measurements done
     # Load the data according to the measurement type
     for i in range(len(os.listdir(DEV))):
@@ -94,4 +96,5 @@ if __name__ == "__main__":
             IVs.append(ivr)
     for ivtype in IVs:
         average(ivtype) # Average the data
-    plots() # Plot the data
+    ivplots() # Plot the data
+    thplots()
